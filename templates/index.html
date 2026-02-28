@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Diet Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .recipe-card { transition: transform 0.2s; border: none; border-radius: 15px; }
+        .recipe-card:hover { transform: scale(1.03); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .hero-section { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 0; }
+    </style>
+</head>
+<body>
+
+    <div class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">🍲 AI Diet Assistant</h1>
+            <p class="lead">Personalized meal recommendations powered by Machine Learning</p>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm p-4 mb-5 bg-white rounded">
+                    <form action="/recommend" method="post" class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Daily Calorie Goal</label>
+                            <input type="number" name="calories" class="form-control" placeholder="e.g. 500" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Target Protein (g)</label>
+                            <input type="number" name="protein" class="form-control" placeholder="e.g. 30" required>
+                        </div>
+                        <div class="col-12 text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">Find Perfect Meals</button>
+                        </div>
+                    </form>
+                </div>
+
+                {% if recipes %}
+                <h3 class="mb-4 text-secondary text-center">Top Recommendations for You</h3>
+                <div class="row">
+                    {% for recipe in recipes %}
+                    <div class="col-md-12 mb-3">
+                        <div class="card recipe-card shadow-sm">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="card-title text-capitalize mb-1">{{ recipe.name }}</h5>
+                                    <span class="badge bg-success">Calories: {{ recipe.calories }}</span>
+                                    <span class="badge bg-info text-dark">Protein: {{ recipe.protein }}g</span>
+                                </div>
+                                <div class="text-muted small">ID: #{{ recipe.id }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
